@@ -27,6 +27,12 @@ config.add('overrides', {
   }
 });
 
+// Add defaults store
+config.defaults('global', { group: { property: 'value' } });
+
+// Add overrides store
+config.overrides('important', { group: { property: 'value' } });
+
 // Explicitly set value at path `group.property`. It cannot be overrided
 config.set('group.property', 'updated value');
 
@@ -64,6 +70,16 @@ Get a value by the path passed. If value was not found, method will return
 Set a value at the passed path. Values set with this method could not be
 overrided later.
 
+#### `.defaults(String path, * value)`
+
+Add a default store. Values from this store will be used if they were not found
+in generic and overrides stores.
+
+#### `.overrides(String path, * value)`
+
+Add an override store. Values from this store will not be overrided by generic
+or defaults stores. 
+
 ## Build
 Module source is in [ES6 module](https://babeljs.io/docs/learn-es6/#modules)
 syntax. It's built using [Babel.js](https://babeljs.io/).
@@ -87,3 +103,6 @@ and run:
 ```
 npm test
 ```
+
+## License
+MIT.
