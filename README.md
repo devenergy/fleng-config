@@ -74,7 +74,7 @@ npm install -d
 ```
 and run:
 ```
-npm build
+make
 ```
 
 ## Tests
