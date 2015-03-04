@@ -8,7 +8,8 @@ class Provider {
     Object.defineProperties(this, {
       '_root_': { value: root || process.cwd() },
       '_stores_': { value: [] },
-      '_overrides_': { value: {} }
+      '_defaults_': { value: [] },
+      '_overrides_': { value: [] }
     })
 
     this._rebuildCache()
@@ -16,7 +17,7 @@ class Provider {
 
   _rebuildCache() {
     var cache = this._cache_ = {}
-    var stores = this._stores_.concat([this._overrides_])
+    var stores = [].concat(this._defaults_, this._stores_, this._overrides_)
     var mergeArgs = [cache].concat(stores)
 
     mergeArgs.push((a, b) => {
@@ -34,7 +35,7 @@ class Provider {
     return cache
   }
 
-  add(name, store) {
+  _addStore(collection, name, store) {
     var data
 
     if ('string' === typeof store) {
@@ -62,9 +63,21 @@ class Provider {
     }
 
     if (data) {
-      this._stores_.push(data)
+      collection.push(data)
       this._rebuildCache()
     }
+  }
+
+  add(name, store) {
+    this._addStore(this._stores_, name, store)
+  }
+
+  defaults(name, store) {
+    this._addStore(this._defaults_, name, store)
+  }
+
+  overrides(name, store) {
+    this._addStore(this._overrides_, name, store)
   }
 
   get(path) {
@@ -90,8 +103,9 @@ class Provider {
   }
 
   set(path, value) {
-    var store = this._overrides_
     var parts = path.split('.')
+    var storeName = `set-${new Date().getTime()}`
+    var store = {}
     var target = store
     var key
 
@@ -107,7 +121,7 @@ class Provider {
     key = parts.shift()
     target[key] = value
 
-    this._rebuildCache()
+    this.overrides(storeName, store);
 
     return true
   }

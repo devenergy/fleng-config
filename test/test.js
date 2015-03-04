@@ -87,4 +87,23 @@ describe('fleng-config', function () {
     config.get('group1.key1').should.be.equal('value1-set');
     should.deepEqual(config.get('group1.key2'), ['value1-set','value2-set']);
   });
+
+  it('should add an override store', function () {
+    config.overrides('overrides', { group7: { key71: 'value71' } });
+    config.add('group7', { group7: { key71: '17eulav' } });
+
+    // Adding a new store should not affect values set by overrides
+    config.get('group7.key71').should.be.equal('value71');
+  });
+
+  it('should add a defaults store', function () {
+    var group1 = config.get('group1');
+
+    config.defaults('global', { group5: { key51: 'value51', key52: 'value52' } });
+    config.get('group5.key51').should.be.equal('value51');
+    should.deepEqual(config.get('group5'), { key51: 'value51', key52: 'value52' });
+
+    // Group1 should stay untouched
+    should.deepEqual(config.get('group1'), group1);
+  });
 });
