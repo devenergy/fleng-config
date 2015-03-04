@@ -1,0 +1,4 @@
+group2:
+  key1: value1-overrided
+  key2:
+    - value1-overrided

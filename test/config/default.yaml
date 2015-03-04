@@ -1,0 +1,10 @@
+group1:
+  key1: value1
+  key2: value2
+
+group2:
+  key1: value1
+  key2:
+    - value1
+    - value2
+    - value3
