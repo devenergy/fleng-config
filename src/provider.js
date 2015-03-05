@@ -59,7 +59,7 @@ class Provider {
       data = store.get()
     }
     else {
-      data = store
+      data = _.cloneDeep(store)
     }
 
     if (data) {
