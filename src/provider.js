@@ -59,7 +59,7 @@ class Provider {
       data = store.get()
     }
     else {
-      data = _.cloneDeep(store)
+      data = store
     }
 
     if (data) {
@@ -98,7 +98,7 @@ class Provider {
     }
 
     else {
-      return this._cache_
+      return _.cloneDepp(this._cache_)
     }
   }
 
