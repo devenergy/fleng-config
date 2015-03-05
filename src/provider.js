@@ -98,7 +98,7 @@ class Provider {
     }
 
     else {
-      return _.cloneDepp(this._cache_)
+      return _.cloneDeep(this._cache_)
     }
   }
 
