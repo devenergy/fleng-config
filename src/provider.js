@@ -12,7 +12,7 @@ class Provider {
       '_overrides_': { value: [] }
     })
 
-    this._rebuildCache()
+    this._cache_ = {}
   }
 
   _rebuildCache() {
@@ -59,7 +59,7 @@ class Provider {
       data = store.get()
     }
     else {
-      data = store
+      data = _.cloneDeep(store)
     }
 
     if (data) {

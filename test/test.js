@@ -106,4 +106,13 @@ describe('fleng-config', function () {
     // Group1 should stay untouched
     should.deepEqual(config.get('group1'), group1);
   });
+
+  it('should allow more than one instance of Provider', function () {
+    var newConfig = new fconf.Provider(__dirname);
+    newConfig.defaults('defaults', { group12: { key121: 'value121' } });
+    newConfig.defaults('global', config.get());
+
+    should(newConfig.get('group12.key121')).equal('value121');
+    should(config.get('group12.key121')).not.equal('value121');
+  });
 });
